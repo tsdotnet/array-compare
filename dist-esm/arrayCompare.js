@@ -2,7 +2,7 @@
  * @author electricessence / https://github.com/electricessence/
  * Licensing: MIT
  */
-import { type, compare, areEqual as areEqualValue } from '@tsdotnet/compare';
+import { areEqual as areEqualValue, compare, type } from '@tsdotnet/compare';
 import ArgumentNullException from '@tsdotnet/exceptions/dist/ArgumentNullException';
 import ArgumentException from '@tsdotnet/exceptions/dist/ArgumentException';
 /*  validateSize: Utility for quick validation/invalidation of array equality.
