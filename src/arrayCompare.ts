@@ -70,9 +70,10 @@ export function areAllEqual (
 
 /**
  * Compares two arrays for equality.
- * @param a
- * @param b
- * @param equalityComparer
+ * @param {ArrayLike<T>} a
+ * @param {ArrayLike<T>} b
+ * @param {EqualityComparison<T>} equalityComparer
+ * @returns {boolean} True if both arrays have the same contents.
  */
 export function areEqual<T> (
 	a: ArrayLike<T>,
@@ -129,6 +130,12 @@ function internalSort<T> (a: ArrayLike<T>, comparer: Comparison<T>): ArrayLike<T
 	return b;
 }
 
+/**
+ * Returns true if both arrays contain the same contents regardless of order.
+ * @param {ArrayLike<T>} a
+ * @param {ArrayLike<T>} b
+ * @returns {boolean}
+ */
 export function areEquivalent<T extends Primitive> (a: ArrayLike<T>, b: ArrayLike<T>): boolean;
 export function areEquivalent<T> (
 	a: ArrayLike<Comparable<T>>,

@@ -8,12 +8,19 @@ export declare function areAllEqual(arrays: ArrayLike<ArrayLike<any>>, equalityC
 export declare function areAllEqual(arrays: ArrayLike<ArrayLike<any>>, strict: boolean, equalityComparer?: EqualityComparison<any>): boolean;
 /**
  * Compares two arrays for equality.
- * @param a
- * @param b
- * @param equalityComparer
+ * @param {ArrayLike<T>} a
+ * @param {ArrayLike<T>} b
+ * @param {EqualityComparison<T>} equalityComparer
+ * @returns {boolean} True if both arrays have the same contents.
  */
 export declare function areEqual<T>(a: ArrayLike<T>, b: ArrayLike<T>, equalityComparer?: EqualityComparison<T>): boolean;
 export declare function areEqual<T>(a: ArrayLike<T>, b: ArrayLike<T>, strict: boolean, equalityComparer?: EqualityComparison<T>): boolean;
+/**
+ * Returns true if both arrays contain the same contents regardless of order.
+ * @param {ArrayLike<T>} a
+ * @param {ArrayLike<T>} b
+ * @returns {boolean}
+ */
 export declare function areEquivalent<T extends Primitive>(a: ArrayLike<T>, b: ArrayLike<T>): boolean;
 export declare function areEquivalent<T>(a: ArrayLike<Comparable<T>>, b: ArrayLike<Comparable<T>>): boolean;
 export declare function areEquivalent<T>(a: ArrayLike<T>, b: ArrayLike<T>, comparer: Comparison<T>): boolean;
