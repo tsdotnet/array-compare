@@ -7,4 +7,5 @@
 A utility for comparing arrays.
 
 ## Docs
+
 [tsdotnet.github.io/array-compare](https://tsdotnet.github.io/array-compare/)
