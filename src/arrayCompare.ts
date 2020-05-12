@@ -3,16 +3,12 @@
  * Licensing: MIT
  */
 
-import {
-	areEqual as areEqualValue,
-	Comparable,
-	compare,
-	Comparison,
-	EqualityComparison,
-	type
-} from '@tsdotnet/compare';
+import areEqualValue from '@tsdotnet/compare/dist/areEqual';
 import ArgumentNullException from '@tsdotnet/exceptions/dist/ArgumentNullException';
 import ArgumentException from '@tsdotnet/exceptions/dist/ArgumentException';
+import {ComparableObject, Comparison, EqualityComparison} from '@tsdotnet/compare/dist/Comparable';
+import type from '@tsdotnet/compare/dist/type';
+import {compare} from '@tsdotnet/compare';
 
 type Primitive = string | number | boolean;
 
@@ -39,16 +35,16 @@ function validateSize (a: ArrayLike<any>, b: ArrayLike<any>): boolean | number
 
 export function areAllEqual (
 	arrays: ArrayLike<ArrayLike<any>>,
-	equalityComparer?: EqualityComparison<any>): boolean;
+	equalityComparison?: EqualityComparison<any>): boolean;
 export function areAllEqual (
 	arrays: ArrayLike<ArrayLike<any>>,
 	strict: boolean,
-	equalityComparer?: EqualityComparison<any>
+	equalityComparison?: EqualityComparison<any>
 ): boolean;
 export function areAllEqual (
 	arrays: ArrayLike<ArrayLike<any>>,
-	strict: boolean | EqualityComparison<any> = true,
-	equalityComparer: EqualityComparison<any> = areEqualValue
+	strict: boolean | EqualityComparison<any>   = true,
+	equalityComparison: EqualityComparison<any> = areEqualValue
 ): boolean
 {
 	if(!arrays) throw new ArgumentNullException('arrays');
@@ -56,14 +52,14 @@ export function areAllEqual (
 
 	if(type.isFunction(strict))
 	{
-		equalityComparer = strict;
+		equalityComparison = strict;
 		strict = true;
 	}
 
 	const first = arrays[0];
 	for(let i = 1, l = arrays.length; i<l; i++)
 	{
-		if(!areEqual(first, arrays[i], strict, equalityComparer)) return false;
+		if(!areEqual(first, arrays[i], strict, equalityComparison)) return false;
 	}
 	return true;
 }
@@ -72,24 +68,24 @@ export function areAllEqual (
  * Compares two arrays for equality.
  * @param {ArrayLike<T>} a
  * @param {ArrayLike<T>} b
- * @param {EqualityComparison<T>} equalityComparer
+ * @param {EqualityComparison<T>} equalityComparison
  * @returns {boolean} True if both arrays have the same contents.
  */
 export function areEqual<T> (
 	a: ArrayLike<T>,
 	b: ArrayLike<T>,
-	equalityComparer?: EqualityComparison<T>): boolean;
+	equalityComparison?: EqualityComparison<T>): boolean;
 export function areEqual<T> (
 	a: ArrayLike<T>,
 	b: ArrayLike<T>,
 	strict: boolean,
-	equalityComparer?: EqualityComparison<T>
+	equalityComparison?: EqualityComparison<T>
 ): boolean;
 export function areEqual<T> (
 	a: ArrayLike<T>,
 	b: ArrayLike<T>,
-	strict: boolean | EqualityComparison<T> = true,
-	equalityComparer: EqualityComparison<T> = areEqualValue
+	strict: boolean | EqualityComparison<T>   = true,
+	equalityComparison: EqualityComparison<T> = areEqualValue
 ): boolean
 {
 	const len = validateSize(a, b);
@@ -97,19 +93,19 @@ export function areEqual<T> (
 
 	if(type.isFunction(strict))
 	{
-		equalityComparer = strict;
+		equalityComparison = strict;
 		strict = true;
 	}
 
 	for(let i = 0; i<len; i++)
 	{
-		if(!equalityComparer(a[i], b[i], strict)) return false;
+		if(!equalityComparison(a[i], b[i], strict)) return false;
 	}
 
 	return true;
 }
 
-function internalSort<T> (a: ArrayLike<T>, comparer: Comparison<T>): ArrayLike<T>
+function internalSort<T> (a: ArrayLike<T>, comparison: Comparison<T>): ArrayLike<T>
 {
 	if(!a || a.length<2) return a;
 
@@ -126,7 +122,7 @@ function internalSort<T> (a: ArrayLike<T>, comparer: Comparison<T>): ArrayLike<T
 		b[i] = a[i];
 	}
 
-	b.sort(comparer);
+	b.sort(comparison);
 	return b;
 }
 
@@ -138,28 +134,28 @@ function internalSort<T> (a: ArrayLike<T>, comparer: Comparison<T>): ArrayLike<T
  */
 export function areEquivalent<T extends Primitive> (a: ArrayLike<T>, b: ArrayLike<T>): boolean;
 export function areEquivalent<T> (
-	a: ArrayLike<Comparable<T>>,
-	b: ArrayLike<Comparable<T>>): boolean;
+	a: ArrayLike<ComparableObject<T>>,
+	b: ArrayLike<ComparableObject<T>>): boolean;
 export function areEquivalent<T> (
 	a: ArrayLike<T>,
 	b: ArrayLike<T>,
-	comparer: Comparison<T>): boolean;
+	comparison: Comparison<T>): boolean;
 export function areEquivalent<T> (
 	a: ArrayLike<T>,
 	b: ArrayLike<T>,
-	comparer: Comparison<T> = compare): boolean
+	comparison: Comparison<T> = compare): boolean
 {
 	const len = validateSize(a, b);
 	if(type.isBoolean(len)) return len as boolean;
 
 	// There might be a better performing way to do this, but for the moment, this
 	// works quite well.
-	a = internalSort(a, comparer);
-	b = internalSort(b, comparer);
+	a = internalSort(a, comparison);
+	b = internalSort(b, comparison);
 
 	for(let i = 0; i<len; i++)
 	{
-		if(comparer(a[i], b[i])!==0) return false;
+		if(comparison(a[i], b[i])!==0) return false;
 	}
 
 	return true;

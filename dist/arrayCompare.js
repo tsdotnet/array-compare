@@ -5,9 +5,11 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
-const compare_1 = require("@tsdotnet/compare");
+const areEqual_1 = tslib_1.__importDefault(require("@tsdotnet/compare/dist/areEqual"));
 const ArgumentNullException_1 = tslib_1.__importDefault(require("@tsdotnet/exceptions/dist/ArgumentNullException"));
 const ArgumentException_1 = tslib_1.__importDefault(require("@tsdotnet/exceptions/dist/ArgumentException"));
+const type_1 = tslib_1.__importDefault(require("@tsdotnet/compare/dist/type"));
+const compare_1 = require("@tsdotnet/compare");
 /*  validateSize: Utility for quick validation/invalidation of array equality.
     Why this way?  Why not pass a closure for the last return?
     Reason: Performance and avoiding the creation of new functions/closures. */
@@ -27,39 +29,39 @@ function validateSize(a, b) {
     // Return the length for downstream processing.
     return len;
 }
-function areAllEqual(arrays, strict = true, equalityComparer = compare_1.areEqual) {
+function areAllEqual(arrays, strict = true, equalityComparison = areEqual_1.default) {
     if (!arrays)
         throw new ArgumentNullException_1.default('arrays');
     if (arrays.length < 2)
         throw new ArgumentException_1.default('arrays', 'Cannot compare a set of arrays less than 2.');
-    if (compare_1.type.isFunction(strict)) {
-        equalityComparer = strict;
+    if (type_1.default.isFunction(strict)) {
+        equalityComparison = strict;
         strict = true;
     }
     const first = arrays[0];
     for (let i = 1, l = arrays.length; i < l; i++) {
-        if (!areEqual(first, arrays[i], strict, equalityComparer))
+        if (!areEqual(first, arrays[i], strict, equalityComparison))
             return false;
     }
     return true;
 }
 exports.areAllEqual = areAllEqual;
-function areEqual(a, b, strict = true, equalityComparer = compare_1.areEqual) {
+function areEqual(a, b, strict = true, equalityComparison = areEqual_1.default) {
     const len = validateSize(a, b);
-    if (compare_1.type.isBoolean(len))
+    if (type_1.default.isBoolean(len))
         return len;
-    if (compare_1.type.isFunction(strict)) {
-        equalityComparer = strict;
+    if (type_1.default.isFunction(strict)) {
+        equalityComparison = strict;
         strict = true;
     }
     for (let i = 0; i < len; i++) {
-        if (!equalityComparer(a[i], b[i], strict))
+        if (!equalityComparison(a[i], b[i], strict))
             return false;
     }
     return true;
 }
 exports.areEqual = areEqual;
-function internalSort(a, comparer) {
+function internalSort(a, comparison) {
     if (!a || a.length < 2)
         return a;
     const len = a.length;
@@ -73,19 +75,19 @@ function internalSort(a, comparer) {
     for (let i = 0; i < len; i++) {
         b[i] = a[i];
     }
-    b.sort(comparer);
+    b.sort(comparison);
     return b;
 }
-function areEquivalent(a, b, comparer = compare_1.compare) {
+function areEquivalent(a, b, comparison = compare_1.compare) {
     const len = validateSize(a, b);
-    if (compare_1.type.isBoolean(len))
+    if (type_1.default.isBoolean(len))
         return len;
     // There might be a better performing way to do this, but for the moment, this
     // works quite well.
-    a = internalSort(a, comparer);
-    b = internalSort(b, comparer);
+    a = internalSort(a, comparison);
+    b = internalSort(b, comparison);
     for (let i = 0; i < len; i++) {
-        if (comparer(a[i], b[i]) !== 0)
+        if (comparison(a[i], b[i]) !== 0)
             return false;
     }
     return true;
