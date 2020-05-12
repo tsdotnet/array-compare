@@ -29,33 +29,32 @@ function validateSize(a, b) {
     // Return the length for downstream processing.
     return len;
 }
-function areAllEqual(arrays, strict = true, equalityComparison = areEqual_1.default) {
+function areAllEqual(arrays, equalityComparison = areEqual_1.default) {
     if (!arrays)
         throw new ArgumentNullException_1.default('arrays');
     if (arrays.length < 2)
         throw new ArgumentException_1.default('arrays', 'Cannot compare a set of arrays less than 2.');
-    if (type_1.default.isFunction(strict)) {
-        equalityComparison = strict;
-        strict = true;
-    }
     const first = arrays[0];
     for (let i = 1, l = arrays.length; i < l; i++) {
-        if (!areEqual(first, arrays[i], strict, equalityComparison))
+        if (!areEqual(first, arrays[i], equalityComparison))
             return false;
     }
     return true;
 }
 exports.areAllEqual = areAllEqual;
-function areEqual(a, b, strict = true, equalityComparison = areEqual_1.default) {
+/**
+ * Compares two arrays for equality.
+ * @param {ArrayLike<T>} a
+ * @param {ArrayLike<T>} b
+ * @param {EqualityComparison<T>} equalityComparison
+ * @returns {boolean} True if both arrays have the same contents.
+ */
+function areEqual(a, b, equalityComparison = areEqual_1.default) {
     const len = validateSize(a, b);
     if (type_1.default.isBoolean(len))
         return len;
-    if (type_1.default.isFunction(strict)) {
-        equalityComparison = strict;
-        strict = true;
-    }
     for (let i = 0; i < len; i++) {
-        if (!equalityComparison(a[i], b[i], strict))
+        if (!equalityComparison(a[i], b[i]))
             return false;
     }
     return true;
@@ -78,6 +77,13 @@ function internalSort(a, comparison) {
     b.sort(comparison);
     return b;
 }
+/**
+ * Returns true if both arrays contain the same contents regardless of order.
+ * @param {ArrayLike<T>} a
+ * @param {ArrayLike<T>} b
+ * @param {Comparison} comparison
+ * @returns {boolean}
+ */
 function areEquivalent(a, b, comparison = compare_1.compare) {
     const len = validateSize(a, b);
     if (type_1.default.isBoolean(len))

@@ -4,6 +4,7 @@ bin
 obj
 *.user
 /spec
+/tests
 /src
 /docs
 typedoc.json

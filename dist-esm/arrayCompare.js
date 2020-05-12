@@ -26,32 +26,31 @@ function validateSize(a, b) {
     // Return the length for downstream processing.
     return len;
 }
-export function areAllEqual(arrays, strict = true, equalityComparison = areEqualValue) {
+export function areAllEqual(arrays, equalityComparison = areEqualValue) {
     if (!arrays)
         throw new ArgumentNullException('arrays');
     if (arrays.length < 2)
         throw new ArgumentException('arrays', 'Cannot compare a set of arrays less than 2.');
-    if (type.isFunction(strict)) {
-        equalityComparison = strict;
-        strict = true;
-    }
     const first = arrays[0];
     for (let i = 1, l = arrays.length; i < l; i++) {
-        if (!areEqual(first, arrays[i], strict, equalityComparison))
+        if (!areEqual(first, arrays[i], equalityComparison))
             return false;
     }
     return true;
 }
-export function areEqual(a, b, strict = true, equalityComparison = areEqualValue) {
+/**
+ * Compares two arrays for equality.
+ * @param {ArrayLike<T>} a
+ * @param {ArrayLike<T>} b
+ * @param {EqualityComparison<T>} equalityComparison
+ * @returns {boolean} True if both arrays have the same contents.
+ */
+export function areEqual(a, b, equalityComparison = areEqualValue) {
     const len = validateSize(a, b);
     if (type.isBoolean(len))
         return len;
-    if (type.isFunction(strict)) {
-        equalityComparison = strict;
-        strict = true;
-    }
     for (let i = 0; i < len; i++) {
-        if (!equalityComparison(a[i], b[i], strict))
+        if (!equalityComparison(a[i], b[i]))
             return false;
     }
     return true;
@@ -73,6 +72,13 @@ function internalSort(a, comparison) {
     b.sort(comparison);
     return b;
 }
+/**
+ * Returns true if both arrays contain the same contents regardless of order.
+ * @param {ArrayLike<T>} a
+ * @param {ArrayLike<T>} b
+ * @param {Comparison} comparison
+ * @returns {boolean}
+ */
 export function areEquivalent(a, b, comparison = compare) {
     const len = validateSize(a, b);
     if (type.isBoolean(len))
