@@ -1,6 +1,6 @@
 {
   "name": "@tsdotnet/array-compare",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A utility for comparing arrays.",
   "author": "electricessence",
   "license": "MIT",
