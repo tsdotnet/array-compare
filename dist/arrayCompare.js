@@ -4,6 +4,7 @@
  * Licensing: MIT
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.areEquivalent = exports.areEqual = exports.areAllEqual = void 0;
 const tslib_1 = require("tslib");
 const areEqual_1 = tslib_1.__importDefault(require("@tsdotnet/compare/dist/areEqual"));
 const ArgumentNullException_1 = tslib_1.__importDefault(require("@tsdotnet/exceptions/dist/ArgumentNullException"));
