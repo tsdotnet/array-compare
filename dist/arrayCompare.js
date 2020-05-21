@@ -1,7 +1,7 @@
 "use strict";
 /*!
  * @author electricessence / https://github.com/electricessence/
- * Licensing: MIT
+ * @license MIT
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.areEquivalent = exports.areEqual = exports.areAllEqual = void 0;
@@ -9,8 +9,8 @@ const tslib_1 = require("tslib");
 const areEqual_1 = tslib_1.__importDefault(require("@tsdotnet/compare/dist/areEqual"));
 const ArgumentNullException_1 = tslib_1.__importDefault(require("@tsdotnet/exceptions/dist/ArgumentNullException"));
 const ArgumentException_1 = tslib_1.__importDefault(require("@tsdotnet/exceptions/dist/ArgumentException"));
-const type_1 = tslib_1.__importDefault(require("@tsdotnet/compare/dist/type"));
-const compare_1 = require("@tsdotnet/compare");
+const type_1 = tslib_1.__importDefault(require("@tsdotnet/type"));
+const compare_1 = tslib_1.__importDefault(require("@tsdotnet/compare/dist/compare"));
 /*  validateSize: Utility for quick validation/invalidation of array equality.
     Why this way?  Why not pass a closure for the last return?
     Reason: Performance and avoiding the creation of new functions/closures. */
@@ -85,7 +85,7 @@ function internalSort(a, comparison) {
  * @param {Comparison} comparison
  * @returns {boolean}
  */
-function areEquivalent(a, b, comparison = compare_1.compare) {
+function areEquivalent(a, b, comparison = compare_1.default) {
     const len = validateSize(a, b);
     if (type_1.default.isBoolean(len))
         return len;

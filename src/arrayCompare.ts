@@ -1,14 +1,14 @@
 /*!
  * @author electricessence / https://github.com/electricessence/
- * Licensing: MIT
+ * @license MIT
  */
 
 import areEqualValue from '@tsdotnet/compare/dist/areEqual';
 import ArgumentNullException from '@tsdotnet/exceptions/dist/ArgumentNullException';
 import ArgumentException from '@tsdotnet/exceptions/dist/ArgumentException';
 import {Comparison, EqualityComparison} from '@tsdotnet/compare/dist/Comparable';
-import type from '@tsdotnet/compare/dist/type';
-import {compare} from '@tsdotnet/compare';
+import type from '@tsdotnet/type';
+import compare from '@tsdotnet/compare/dist/compare';
 
 /*  validateSize: Utility for quick validation/invalidation of array equality.
 	Why this way?  Why not pass a closure for the last return?

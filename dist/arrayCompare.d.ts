@@ -1,6 +1,6 @@
 /*!
  * @author electricessence / https://github.com/electricessence/
- * Licensing: MIT
+ * @license MIT
  */
 import { Comparison, EqualityComparison } from '@tsdotnet/compare/dist/Comparable';
 export declare function areAllEqual(arrays: ArrayLike<ArrayLike<any>>, equalityComparison?: EqualityComparison<any>): boolean;
