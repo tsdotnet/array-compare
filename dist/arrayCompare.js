@@ -6,11 +6,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.areEquivalent = exports.areEqual = exports.areAllEqual = void 0;
 const tslib_1 = require("tslib");
-const areEqual_1 = (0, tslib_1.__importDefault)(require("@tsdotnet/compare/dist/areEqual"));
-const ArgumentNullException_1 = (0, tslib_1.__importDefault)(require("@tsdotnet/exceptions/dist/ArgumentNullException"));
-const ArgumentException_1 = (0, tslib_1.__importDefault)(require("@tsdotnet/exceptions/dist/ArgumentException"));
-const type_1 = (0, tslib_1.__importDefault)(require("@tsdotnet/type"));
-const compare_1 = (0, tslib_1.__importDefault)(require("@tsdotnet/compare/dist/compare"));
+const areEqual_1 = tslib_1.__importDefault(require("@tsdotnet/compare/dist/areEqual"));
+const ArgumentNullException_1 = tslib_1.__importDefault(require("@tsdotnet/exceptions/dist/ArgumentNullException"));
+const ArgumentException_1 = tslib_1.__importDefault(require("@tsdotnet/exceptions/dist/ArgumentException"));
+const type_1 = tslib_1.__importDefault(require("@tsdotnet/type"));
+const compare_1 = tslib_1.__importDefault(require("@tsdotnet/compare/dist/compare"));
 /*  validateSize: Utility for quick validation/invalidation of array equality.
     Why this way?  Why not pass a closure for the last return?
     Reason: Performance and avoiding the creation of new functions/closures. */
