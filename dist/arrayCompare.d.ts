@@ -2,7 +2,7 @@
  * @author electricessence / https://github.com/electricessence/
  * @license MIT
  */
-import { Comparison, EqualityComparison } from '@tsdotnet/compare/dist/Comparable';
+import { Comparison, EqualityComparison } from '@tsdotnet/compare';
 export declare function areAllEqual(arrays: ArrayLike<ArrayLike<any>>, equalityComparison?: EqualityComparison<any>): boolean;
 /**
  * Compares two arrays for equality.

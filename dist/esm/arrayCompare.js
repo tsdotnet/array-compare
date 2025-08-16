@@ -1,16 +1,11 @@
-"use strict";
 /*!
  * @author electricessence / https://github.com/electricessence/
  * @license MIT
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.areEquivalent = exports.areEqual = exports.areAllEqual = void 0;
-const tslib_1 = require("tslib");
-const areEqual_1 = tslib_1.__importDefault(require("@tsdotnet/compare/dist/areEqual"));
-const ArgumentNullException_1 = tslib_1.__importDefault(require("@tsdotnet/exceptions/dist/ArgumentNullException"));
-const ArgumentException_1 = tslib_1.__importDefault(require("@tsdotnet/exceptions/dist/ArgumentException"));
-const type_1 = tslib_1.__importDefault(require("@tsdotnet/type"));
-const compare_1 = tslib_1.__importDefault(require("@tsdotnet/compare/dist/compare"));
+import { areEqual as areEqualValue } from '@tsdotnet/compare';
+import { ArgumentNullException, ArgumentException } from '@tsdotnet/exceptions';
+import type from '@tsdotnet/type';
+import { compare } from '@tsdotnet/compare';
 /*  validateSize: Utility for quick validation/invalidation of array equality.
     Why this way?  Why not pass a closure for the last return?
     Reason: Performance and avoiding the creation of new functions/closures. */
@@ -30,11 +25,11 @@ function validateSize(a, b) {
     // Return the length for downstream processing.
     return len;
 }
-function areAllEqual(arrays, equalityComparison = areEqual_1.default) {
+export function areAllEqual(arrays, equalityComparison = areEqualValue) {
     if (!arrays)
-        throw new ArgumentNullException_1.default('arrays');
+        throw new ArgumentNullException('arrays');
     if (arrays.length < 2)
-        throw new ArgumentException_1.default('arrays', 'Cannot compare a set of arrays less than 2.');
+        throw new ArgumentException('arrays', 'Cannot compare a set of arrays less than 2.');
     const first = arrays[0];
     for (let i = 1, l = arrays.length; i < l; i++) {
         if (!areEqual(first, arrays[i], equalityComparison))
@@ -42,7 +37,6 @@ function areAllEqual(arrays, equalityComparison = areEqual_1.default) {
     }
     return true;
 }
-exports.areAllEqual = areAllEqual;
 /**
  * Compares two arrays for equality.
  * @param {ArrayLike<T>} a
@@ -50,9 +44,9 @@ exports.areAllEqual = areAllEqual;
  * @param {EqualityComparison<T>} equalityComparison
  * @returns {boolean} True if both arrays have the same contents.
  */
-function areEqual(a, b, equalityComparison = areEqual_1.default) {
+export function areEqual(a, b, equalityComparison = areEqualValue) {
     const len = validateSize(a, b);
-    if (type_1.default.isBoolean(len))
+    if (type.isBoolean(len))
         return len;
     for (let i = 0; i < len; i++) {
         if (!equalityComparison(a[i], b[i]))
@@ -60,7 +54,6 @@ function areEqual(a, b, equalityComparison = areEqual_1.default) {
     }
     return true;
 }
-exports.areEqual = areEqual;
 function internalSort(a, comparison) {
     if (!a || a.length < 2)
         return a;
@@ -85,9 +78,9 @@ function internalSort(a, comparison) {
  * @param {Comparison} comparison
  * @returns {boolean}
  */
-function areEquivalent(a, b, comparison = compare_1.default) {
+export function areEquivalent(a, b, comparison = compare) {
     const len = validateSize(a, b);
-    if (type_1.default.isBoolean(len))
+    if (type.isBoolean(len))
         return len;
     // There might be a better performing way to do this, but for the moment, this
     // works quite well.
@@ -99,5 +92,4 @@ function areEquivalent(a, b, comparison = compare_1.default) {
     }
     return true;
 }
-exports.areEquivalent = areEquivalent;
 //# sourceMappingURL=arrayCompare.js.map
