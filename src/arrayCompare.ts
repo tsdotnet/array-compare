@@ -5,8 +5,8 @@
 
 import {areEqual as areEqualValue} from '@tsdotnet/compare';
 import {ArgumentNullException, ArgumentException} from '@tsdotnet/exceptions';
-import {Comparison, EqualityComparison} from '@tsdotnet/compare';
-import type from '@tsdotnet/type';
+import type {Comparison, EqualityComparison} from '@tsdotnet/compare';
+import typeUtil from '@tsdotnet/type';
 import {compare} from '@tsdotnet/compare';
 
 /*  validateSize: Utility for quick validation/invalidation of array equality.
@@ -39,9 +39,12 @@ export function areAllEqual (
 	if(arrays.length<2) throw new ArgumentException('arrays', 'Cannot compare a set of arrays less than 2.');
 
 	const first = arrays[0];
+	if(first === undefined) return false;
 	for(let i = 1, l = arrays.length; i<l; i++)
 	{
-		if(!areEqual(first, arrays[i], equalityComparison)) return false;
+		const current = arrays[i];
+		if(current === undefined) return false;
+		if(!areEqual(first, current, equalityComparison)) return false;
 	}
 	return true;
 }
@@ -60,11 +63,16 @@ export function areEqual<T> (
 ): boolean
 {
 	const len = validateSize(a, b);
-	if(type.isBoolean(len)) return len as boolean;
+	if(typeUtil.isBoolean(len)) return len as boolean;
 
 	for(let i = 0; i<len; i++)
 	{
-		if(!equalityComparison(a[i], b[i])) return false;
+		const aVal = a[i];
+		const bVal = b[i];
+		if(aVal === undefined || bVal === undefined) {
+			return aVal === bVal; // Both undefined = equal, one undefined = not equal
+		}
+		if(!equalityComparison(aVal, bVal)) return false;
 	}
 
 	return true;
@@ -84,7 +92,11 @@ function internalSort<T> (a: ArrayLike<T>, comparison: Comparison<T>): ArrayLike
 	}
 	for(let i = 0; i<len; i++)
 	{
-		b[i] = a[i];
+		const val = a[i];
+		if(val === undefined) {
+			throw new Error(`Array element at index ${i} is undefined`);
+		}
+		b[i] = val;
 	}
 
 	b.sort(comparison);
@@ -104,7 +116,7 @@ export function areEquivalent<T> (
 	comparison: Comparison<T> = compare): boolean
 {
 	const len = validateSize(a, b);
-	if(type.isBoolean(len)) return len as boolean;
+	if(typeUtil.isBoolean(len)) return len as boolean;
 
 	// There might be a better performing way to do this, but for the moment, this
 	// works quite well.
@@ -113,7 +125,12 @@ export function areEquivalent<T> (
 
 	for(let i = 0; i<len; i++)
 	{
-		if(comparison(a[i], b[i])!==0) return false;
+		const aVal = a[i];
+		const bVal = b[i];
+		if(aVal === undefined || bVal === undefined) {
+			throw new Error(`Array element at index ${i} is undefined`);
+		}
+		if(comparison(aVal, bVal)!==0) return false;
 	}
 
 	return true;
