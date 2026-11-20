@@ -1,4 +1,4 @@
-![@tsdotnet/array-compare: Compare arrays by value. Equal, or equivalent in any order.](https://cdn.jsdelivr.net/gh/tsdotnet/array-compare@master/assets/banner.svg)
+<a href="https://tsdotnet.github.io/array-compare/"><img src="https://cdn.jsdelivr.net/gh/tsdotnet/array-compare@master/assets/banner.svg" alt="@tsdotnet/array-compare: Compare arrays by value. Equal, or equivalent in any order."></a>
 
 [![npm version](https://img.shields.io/npm/v/@tsdotnet/array-compare.svg?style=flat-square)](https://www.npmjs.com/package/@tsdotnet/array-compare)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/tsdotnet/array-compare/blob/master/LICENSE)
