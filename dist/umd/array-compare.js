@@ -4,6 +4,10 @@
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global.tsdotnet = global.tsdotnet || {}, global.tsdotnet.arrayCompare = global.tsdotnet.arrayCompare || {}), global.tsdotnet.compare, global.tsdotnet.exceptions, global.tsdotnet.type));
 })(this, (function (exports, compare, exceptions, typeUtil) { 'use strict';
 
+    function _interopDefault (e) { return e && e.__esModule ? e : { default: e }; }
+
+    var typeUtil__default = /*#__PURE__*/_interopDefault(typeUtil);
+
     /*!
      * @author electricessence / https://github.com/electricessence/
      * @license MIT
@@ -39,7 +43,7 @@
     }
     function areEqual(a, b, equalityComparison = compare.areEqual) {
         const len = validateSize(a, b);
-        if (typeUtil.isBoolean(len))
+        if (typeUtil__default.default.isBoolean(len))
             return len;
         for (let i = 0; i < len; i++) {
             const aVal = a[i];
@@ -75,7 +79,7 @@
     }
     function areEquivalent(a, b, comparison = compare.compare) {
         const len = validateSize(a, b);
-        if (typeUtil.isBoolean(len))
+        if (typeUtil__default.default.isBoolean(len))
             return len;
         a = internalSort(a, comparison);
         b = internalSort(b, comparison);
